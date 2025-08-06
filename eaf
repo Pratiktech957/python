@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellTrack - Ultra Dynamic Wellness Hub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+/* WellTrack Quantum Dark Theme CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Comfortaa:wght@300;400;600&display=swap');
+
+/* CSS Variables for Dynamic Theming */
+:root {
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #111111;
+  --card-bg: #1a1a1a;
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --accent-pink: #ec4899;
+  --accent-orange: #f59e0b;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --border-color: #262626;
+  --shadow-glow: rgba(139, 92, 246, 0.3);
+  --shadow-dark: rgba(0, 0, 0, 0.8);
+  --glass-bg: rgba(26, 26, 26, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --gradient-primary: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+  --gradient-secondary: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  --gradient-tertiary: linear-gradient(135deg, var(--accent-green), var(--accent-pink));
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --mouse-x2: 50%;
+  --mouse-y2: 50%;
+  --mouse-x3: 50%;
+  --mouse-y3: 50%;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Comfortaa', sans-serif;
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at var(--mouse-x2) var(--mouse-y2), rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at var(--mouse-x3) var(--mouse-y3), rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+  z-index: -2;
+  animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Neural Network Background */
+.neural-network-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+@keyframes neuralPulse {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.2); 
+  }
+}
+
+/* Morphing Blobs */
+.morphing-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.6;
+  z-index: -1;
+  animation: morphBlob 15s ease-in-out infinite;
+}
+
+.blob-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-primary);
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  width: 250px;
+  height: 250px;
+  background: var(--gradient-secondary);
+  top: 60%;
+  right: 10%;
+  animation-delay: 5s;
+}
+
+.blob-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--gradient-tertiary);
+  bottom: 10%;
+  left: 50%;
+  animation-delay: 10s;
+}
+
+@keyframes morphBlob {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    border-radius: 50%;
+  }
+  25% { 
+    transform: scale(1.2) rotate(90deg);
+    border-radius: 60% 40% 30% 70%;
+  }
+  50% { 
+    transform: scale(0.8) rotate(180deg);
+    border-radius: 30% 60% 70% 40%;
+  }
+  75% { 
+    transform: scale(1.1) rotate(270deg);
+    border-radius: 40% 30% 60% 70%;
+  }
+}
+
+/* Quantum Particles */
+.quantum-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-purple);
+  border-radius: 50%;
+  z-index: -1;
+  animation: quantumFloat 6s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--accent-purple);
+}
+
+@keyframes quantumFloat {
+  0%, 100% { 
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(10vh) scale(1);
+  }
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fixed Header Layout Issues */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+  position: relative;
+  min-height: 200px;
+}
+
+.header h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+  text-shadow: 0 0 30px var(--shadow-glow);
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.dynamic-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.ai-mood-generator {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+/* Fixed Widget Positioning */
+.quantum-weather-widget {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  z-index: 10;
+  max-width: 200px;
+}
+
+.dynamic-weather-mood {
+  color: var(--accent-green);
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* Fixed AI Personality Indicator */
+.ai-personality-indicator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  color: var(--accent-purple);
+  z-index: 10;
+  max-width: 200px;
+}
+
+.mind-state-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.mind-state-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  animation: mindStatePulse 2s ease-in-out infinite;
+}
+
+@keyframes mindStatePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Bio Rhythm Indicator */
+.bio-rhythm-indicator {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.bio-bar {
+  width: 60px;
+  height: 8px;
+  background: var(--secondary-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bio-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  width: 70%;
+  animation: bioRhythm 3s ease-in-out infinite;
+}
+
+@keyframes bioRhythm {
+  0%, 100% { width: 30%; }
+  50% { width: 90%; }
+}
+
+/* AI Brain Wave */
+.ai-brain-wave {
+  width: 200px;
+  height: 3px;
+  background: var(--gradient-primary);
+  margin: 20px auto;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-brain-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: brainWave 2s linear infinite;
+}
+
+@keyframes brainWave {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Date Display */
+#currentDate {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: 15px;
+  font-family: 'Orbitron', monospace;
+}
+
+/* Holographic Effect */
+.holographic-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+  animation: holographicScan 4s linear infinite;
+  z-index: 1;
+}
+
+@keyframes holographicScan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 25px;
+  padding: 30px;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  box-shadow: 
+    0 10px 30px var(--shadow-dark),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px var(--shadow-dark),
+    0 0 20px var(--shadow-glow);
+}
+
+/* Consciousness Level */
+.consciousness-level {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 0.8rem;
+  color: var(--accent-purple);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+}
+
+/* Fixed Main Grid for Better Responsiveness */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Tracker Section */
+.tracker-section {
+  text-align: center;
+  position: relative;
+  min-height: 300px;
+}
+
+.tracker-section h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+.counter-display {
+  font-size: clamp(3rem, 8vw, 4rem);
+  font-weight: 900;
+  font-family: 'Orbitron', monospace;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 30px 0;
+  text-shadow: 0 0 20px var(--shadow-glow);
+  animation: counterPulse 2s ease-in-out infinite;
+}
+
+@keyframes counterPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Fixed Progress Ring Positioning */
+.progress-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  z-index: 0;
+}
+
+.progress-ring circle {
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+/* Track Button */
+.track-btn {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 25px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+  z-index: 5;
+}
+
+.track-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.6);
+}
+
+.track-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.track-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.track-btn:hover::before {
+  left: 100%;
+}
+
+/* Mood Section */
+.mood-section h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.mood-text {
+  background: var(--secondary-bg);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.mood-btn {
+  background: var(--gradient-secondary);
+  border: none;
+  border-radius: 15px;
+  padding: 12px 20px;
+  margin: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.mood-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.stats-card {
+  position: relative;
+}
+
+.stats-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.chart-container {
+  height: 250px;
+  position: relative;
+}
+
+/* Neural Connections */
+.neural-connection {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-purple);
+  border-radius: 50%;
+  animation: neuralPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 15px var(--accent-purple);
+}
+
+/* Quantum Insights Panel */
+.quantum-insights-panel {
+  margin: 40px 0;
+  padding: 30px;
+  text-align: center;
+}
+
+.ai-insight-text {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Chat Section */
+.chat-section {
+  margin: 40px 0;
+  padding: 30px;
+}
+
+.chat-section h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  background: var(--secondary-bg);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.message {
+  margin: 15px 0;
+  padding: 15px 20px;
+  border-radius: 18px;
+  max-width: 80%;
+  line-height: 1.5;
+  animation: messageSlide 0.3s ease-out;
+  word-wrap: break-word;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-message {
+  background: var(--gradient-primary);
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+.bot-message {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.typing-indicator {
+  background: var(--gradient-secondary) !important;
+  animation: typingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes typingPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Chat Input */
+.chat-input {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.chat-input input {
+  flex: 1;
+  min-width: 200px;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 15px 20px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+.send-btn {
+  background: var(--gradient-tertiary);
+  border: none;
+  border-radius: 15px;
+  padding: 15px 25px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  flex-shrink: 0;
+}
+
+.send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.action-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 12px 25px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Comfortaa', sans-serif;
+  white-space: nowrap;
+}
+
+.action-btn:hover {
+  background: var(--gradient-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+}
+
+.reset-btn:hover {
+  background: var(--gradient-tertiary);
+  box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+}
+
+/* Fixed Notification Positioning */
+.notification {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  font-weight: 600;
+  transform: translateX(500px);
+  transition: transform 0.5s ease;
+  z-index: 9999;
+  max-width: 400px;
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+  backdrop-filter: blur(20px);
+  word-wrap: break-word;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+/* Emoji Rain */
+.emoji-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.emoji-particle {
+  position: absolute;
+  font-size: 24px;
+  animation: emojifall 3s linear infinite;
+}
+
+@keyframes emojifall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Achievement Effects */
+.achievement-unlock {
+  animation: achievementBounce 0.6s ease-out;
+}
+
+@keyframes achievementBounce {
+  0% { transform: scale(0) rotate(-180deg); }
+  50% { transform: scale(1.1) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.achievement-fireworks {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-bg);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-secondary);
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 15px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 10px;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .counter-display {
+    font-size: 3rem;
+  }
+  
+  .quantum-weather-widget,
+  .ai-personality-indicator {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 10px auto;
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .action-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .chat-input {
+    flex-direction: column;
+  }
+  
+  .chat-input input {
+    min-width: auto;
+  }
+  
+  .notification {
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: none;
+    transform: translateY(-200px);
+  }
+  
+  .notification.show {
+    transform: translateY(0);
+  }
+  
+  .progress-ring {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .card {
+    padding: 20px;
+    margin: 15px 0;
+  }
+  
+  .track-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+  
+  .counter-display {
+    font-size: 2.5rem;
+  }
+  
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Quantum Mode Toggle Effects */
+.quantum-mode {
+  animation: quantumShift 2s ease-in-out;
+}
+
+@keyframes quantumShift {
+  0% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(180deg) brightness(1.2); }
+  100% { filter: hue-rotate(0deg); }
+}
+
+/* High Contrast & Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #444444;
+    --card-bg: #222222;
+  }
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--accent-purple);
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Focus States for Accessibility */
+button:focus,
+input:focus {
+  outline: 2px solid var(--accent-purple);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .morphing-blob,
+  .quantum-particle,
+  .neural-network-bg,
+  .emoji-rain {
+    display: none;
+  }
+  
+  .card {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
+
+/* Fixed Z-index Hierarchy */
+.neural-network-bg { z-index: -2; }
+.morphing-blob { z-index: -1; }
+.quantum-particle { z-index: -1; }
+body::before { z-index: -2; }
+.container { z-index: 1; }
+.card { z-index: 2; }
+.progress-ring { z-index: 0; }
+.track-btn { z-index: 5; }
+.quantum-weather-widget { z-index: 10; }
+.ai-personality-indicator { z-index: 10; }
+.emoji-rain { z-index: 1000; }
+.achievement-fireworks { z-index: 1001; }
+.notification { z-index: 9999; }
+    </style>
+</head>
+<body>
+    <div class="neural-network-bg" id="neuralNetwork"></div>
+    <div class="emoji-rain" id="emojiRain"></div>
+    
+    <div class="morphing-blob blob-1"></div>
+    <div class="morphing-blob blob-2"></div>
+    <div class="morphing-blob blob-3"></div>
+
+    <!-- Quantum particles -->
+    <div class="quantum-particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="quantum-particle" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="quantum-particle" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="quantum-particle" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="quantum-particle" style="left: 90%; animation-delay: 8s;"></div>
+
+    <div class="container">
+        <div class="header holographic-effect">
+            <div class="quantum-weather-widget" id="weatherWidget">
+                <div>🌤️ Dynamic Mood: <span id="weatherMood">Energetic</span></div>
+                <div class="dynamic-weather-mood" id="weatherSub">Perfect for growth!</div>
+            </div>
+
+            <div class="ai-personality-indicator" id="aiPersonality">
+                Neural Explorer • Curious
+            </div>
+            
+            <div class="mind-state-indicator">
+                <div class="mind-state-dot"></div>
+                <span id="mindState">Focused</span>
+            </div>
+            
+            <h1>WellTrack No Fap</h1>
+            
+            <div class="dynamic-subtitle" id="dynamicSubtitle">
+                <div class="ai-mood-generator" id="aiMoodGen">
+                    Quantum-Enhanced Wellness Experience
+                </div>
+            </div>
+            
+            <div class="ai-brain-wave"></div>
+            <div id="currentDate"></div>
+            
+            <div class="bio-rhythm-indicator">
+                <div class="bio-bar"><div class="bio-fill" style="animation-delay: 0s;"></div></div>
+                <div class="bio-bar"><div class="bio-fill" style="animation-delay: 1s;"></div></div>
+                <div class="bio-bar"><div class="bio-fill" style="animation-delay: 2s;"></div></div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card tracker-section holographic-effect">
+                <div class="consciousness-level">AWARENESS LEVEL</div>
+                <h2>🧠 Activity Tracker</h2>
+                <div class="counter-display" id="counter">0</div>
+                <button class="track-btn" id="trackBtn">⚡ QUANTUM TRACK</button>
+                
+                <svg class="progress-ring" id="progressRing">
+                    <circle cx="90" cy="90" r="70" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
+                    <circle cx="90" cy="90" r="70" stroke="url(#quantumProgressGradient)" stroke-width="8" fill="none" 
+                            stroke-dasharray="440" stroke-dashoffset="440" id="progressCircle" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="quantumProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8b5cf6"/>
+                            <stop offset="50%" style="stop-color:#3b82f6"/>
+                            <stop offset="100%" style="stop-color:#10b981"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="card mood-section holographic-effect">
+                <div class="consciousness-level">MOOD ENGINE</div>
+                <h2>🌈 AI Mood Synthesizer</h2>
+                <div class="mood-text" id="moodText">Neural networks activated. Ready for consciousness expansion! ✨</div>
+                <div>
+                    <button class="mood-btn" onclick="generateQuantumMood()">🔮 QUANTUM BOOST</button>
+                    <button class="mood-btn" onclick="generateCosmicHumor()">🌌 COSMIC LAUGHS</button>
+                    <button class="mood-btn" onclick="generateNeuralWisdom()">🧠 NEURAL WISDOM</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="card stats-card holographic-effect">
+                <h3>📊 Consciousness Patterns</h3>
+                <div class="chart-container">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+                <div class="neural-connection" style="top: 20px; left: 20px;"></div>
+            </div>
+
+            <div class="card stats-card holographic-effect">
+                <h3>🧬 Neural Evolution</h3>
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+                <div class="neural-connection" style="top: 30px; right: 30px;"></div>
+            </div>
+
+            <div class="card stats-card holographic-effect">
+                <h3>⚡ Quantum Metrics</h3>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="neural-connection" style="bottom: 20px; left: 50%;"></div>
+            </div>
+        </div>
+
+        <div class="card quantum-insights-panel holographic-effect">
+            <div class="ai-insight-text" id="quantumInsight">🔬 Quantum Analysis: Your consciousness patterns are evolving beautifully!</div>
+            <button class="mood-btn" onclick="generateQuantumInsight()">🚀 NEW INSIGHT</button>
+        </div>
+
+        <div class="card chat-section holographic-effect">
+            <h3>🤖 Quantum AI Coach</h3>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    🌟 Greetings, consciousness explorer! I'm your quantum AI companion, equipped with neural pattern recognition and multidimensional awareness. How shall we expand your reality today? ✨
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Speak your mind to the quantum realm...">
+                <button class="send-btn" onclick="sendQuantumMessage()">🚀 TRANSMIT</button>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn" onclick="downloadQuantumReport()">📊 QUANTUM REPORT</button>
+            <button class="action-btn" onclick="showNeuralGoals()">🎯 NEURAL GOALS</button>
+            <button class="action-btn" onclick="toggleQuantumMode()">🌌 QUANTUM MODE</button>
+            <button class="action-btn" onclick="showCosmicAchievements()">🏆 COSMIC WINS</button>
+            <button class="action-btn" onclick="activateEmojiRain()">🎉 EMOJI STORM</button>
+            <button class="action-btn reset-btn" onclick="quantumReset()">🔄 QUANTUM RESET</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Quantum-Enhanced Storage System with Neural Pattern Recognition
+        class QuantumWellTrackStorage {
+            constructor() {
+                this.initializeQuantumStor
